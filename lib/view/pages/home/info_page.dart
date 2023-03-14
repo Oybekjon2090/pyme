@@ -1,14 +1,17 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/credit_card_widget.dart';
-import 'package:flutter_credit_card/glassmorphism_config.dart';
 import 'package:pyme/domen/model/ccard_model.dart';
 import 'package:pyme/view/style/style.dart';
 
+import '../general/summa_add.dart';
 import 'edit_card.dart';
 
 class Infos extends StatefulWidget {
   final CardModel infos;
-  const Infos({super.key, required this.infos});
+  final String docId;
+  const Infos({super.key, required this.infos, required this.docId});
 
   @override
   State<Infos> createState() => _InfosState();
@@ -22,7 +25,7 @@ class _InfosState extends State<Infos> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('infos'),
+        title: const Text('infos'),
         actions: [
           IconButton(
               onPressed: () {
@@ -31,7 +34,7 @@ class _InfosState extends State<Infos> {
                           info: widget.infos,
                         )));
               },
-              icon: Icon(Icons.edit))
+              icon: const Icon(Icons.edit))
         ],
       ),
       body: Column(
@@ -77,7 +80,26 @@ class _InfosState extends State<Infos> {
               ],
             ),
           ),
+           
+          
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Theme.of(context).unselectedWidgetColor,
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (a) => AddSummaPage(
+                docId: widget.docId,
+                info: widget.infos,
+              ),
+            ),
+          );
+        },
+        child: Icon(
+          Icons.add,
+          color: Theme.of(context).scaffoldBackgroundColor,
+        ),
       ),
     );
   }

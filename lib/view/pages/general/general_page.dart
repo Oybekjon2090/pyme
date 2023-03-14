@@ -17,7 +17,7 @@ class GeneralPage extends StatefulWidget {
 class _GeneralPageState extends State<GeneralPage> {
   List<Widget> mainPages = [
     const HomePage(),
-    AddCard(),
+    const AddCard(),
   ];
 
   int currentIndex = 0;

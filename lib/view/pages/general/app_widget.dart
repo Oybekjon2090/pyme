@@ -31,10 +31,9 @@ class _AppWidgetState extends State<AppWidget> {
                 useMaterial3: true,
               ),
               debugShowCheckedModeBanner: false,
-              home: HomePage(),
+              home: const HomePage(),
             ),
           );
         });
-      
   }
 }

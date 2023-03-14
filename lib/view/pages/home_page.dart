@@ -1,18 +1,14 @@
-import 'package:blurrycontainer/blurrycontainer.dart';
-import 'package:firebase_core/firebase_core.dart';
+
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
-import 'package:flutter_credit_card/credit_card_brand.dart';
 import 'package:flutter_credit_card/credit_card_widget.dart';
-import 'package:flutter_credit_card/custom_card_type_icon.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:pyme/controller/cards_controller.dart';
-import 'package:pyme/domen/model/ccard_model.dart';
-import 'package:pyme/view/pages/general/general_page.dart';
-
 import 'package:pyme/view/pages/home/add_card.dart';
-import 'package:pyme/view/pages/home/edit_card.dart';
+
 import 'package:pyme/view/pages/home/info_page.dart';
 
 import '../style/style.dart';
@@ -55,7 +51,7 @@ class _HomePageState extends State<HomePage> {
                         onTap: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (a) => Infos(infos: state.list[index]),
+                              builder: (a) => Infos(infos: state.list[index], docId: '',),
                             ),
                           );
                         },
@@ -78,9 +74,9 @@ class _HomePageState extends State<HomePage> {
                 FloatingActionButton(
                   onPressed: () {
                     Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (_) => AddCard()));
+                        .push(MaterialPageRoute(builder: (_) => const AddCard()));
                   },
-                  child: Text('Add'),
+                  child: const Text('Add'),
                 ),
                 20.verticalSpace
               ],

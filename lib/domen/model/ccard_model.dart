@@ -1,3 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:pyme/domen/model/summa_model.dart';
+
 class CardModel {
   final String? name;
   final String? number;
@@ -5,21 +8,26 @@ class CardModel {
   final String? svv;
   final String? docId;
 
+
   CardModel( {
     required this.docId,
     required this.name,
+    
     required this.number,
     required this.data,
     required this.svv,
   });
 
-  factory CardModel.fromJson(Map<String, dynamic> data, String docId) {
+  factory CardModel.fromJson(Map<String, dynamic> data, String? docId ) {
+  
     return CardModel(
+      
       docId: docId,
       name: data["name"],
       number: data["number"],
       data: data["data"],
       svv: data["svv"],
+      
     );
   }
 

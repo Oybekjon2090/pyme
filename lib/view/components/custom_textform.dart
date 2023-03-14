@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
+
 
 
 
@@ -87,7 +87,7 @@ class CustomTextFrom extends StatelessWidget {
               color: Color(0xffAFB0B6),
             ),
             borderRadius: BorderRadius.all(
-              Radius.circular(24),
+              Radius.circular(12),
             ),
           ),
           enabledBorder: const OutlineInputBorder(

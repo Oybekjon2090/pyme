@@ -1,4 +1,4 @@
-// ignore_for_file: unused_local_variable
+// ignore_for_file: unused_local_variable, avoid_print
 
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/credit_card_brand.dart';
@@ -9,7 +9,6 @@ import 'package:flutter_credit_card/custom_card_type_icon.dart';
 import 'package:flutter_credit_card/glassmorphism_config.dart';
 import 'package:provider/provider.dart';
 import 'package:pyme/domen/model/ccard_model.dart';
-import 'package:pyme/view/pages/home/info_page.dart';
 import 'package:pyme/view/pages/home_page.dart';
 
 import '../../../controller/cards_controller.dart';

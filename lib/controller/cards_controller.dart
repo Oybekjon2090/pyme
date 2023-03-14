@@ -1,7 +1,11 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:flutter/material.dart';
 import 'package:pyme/domen/model/ccard_model.dart';
+
+import '../domen/model/summa_model.dart';
 
 class CardController extends ChangeNotifier {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -9,23 +13,22 @@ class CardController extends ChangeNotifier {
   bool createLoading = false;
   bool createCardLoading = false;
   bool editLoading = false;
+  bool summaLoading = false;
   List<CardModel> list = [];
-   int currentIndex = 0;
+  int currentIndex = 0;
   creatCard({
     required VoidCallback onSuccess,
     required CardModel infos,
   }) async {
     createLoading = true;
     notifyListeners();
-    // ignore: unused_local_variable
+    // ignore: 
     var res = await firestore.collection("cards").add(CardModel(
             data: infos.data,
             name: infos.name,
             number: infos.number,
             svv: infos.svv,
-            docId: ''
-            
-            )
+            docId: '')
         .toJson());
 
     createLoading = false;
@@ -46,14 +49,13 @@ class CardController extends ChangeNotifier {
       debugPrint('${list.length}');
     }
     createCardLoading = false;
-    print('Cards ${list.length}');
+   
     notifyListeners();
   }
 
   editUser({
     required VoidCallback onSuccess,
     required CardModel infos,
-    
   }) async {
     editLoading = true;
     String? docId;
@@ -65,8 +67,7 @@ class CardController extends ChangeNotifier {
                   number: infos.number,
                   data: infos.data,
                   svv: infos.svv,
-                  docId: ''
-                  )
+                  docId: '')
               .toJson(),
         );
     editLoading = false;
@@ -74,9 +75,39 @@ class CardController extends ChangeNotifier {
     onSuccess();
   }
 
-   setIndex(int index) {
+  setIndex(int index) {
     currentIndex = index;
     notifyListeners();
   }
 
+  addSumma({
+    required SummaModel info,
+    required String docId,
+    required CardModel infos,
+    required VoidCallback onSuccess,
+  }) async {
+    summaLoading = true;
+    notifyListeners();
+
+    CollectionReference users = firestore.collection('cards');
+    // ignore: 
+    var res = await users.doc(infos.docId).collection('arxiv').add(
+          SummaModel(
+            arxivId: "",
+            date: info.date,
+            summaKomment: info.summaKomment, summa: info.summa,
+          ).toJson(),
+        );
+
+    users.doc(infos.docId).update(CardModel(
+          docId: infos.docId,
+          data: infos.data,
+          name: infos.name,
+          number: infos.number,
+          svv: infos.svv,
+        ).toJson());
+    summaLoading = false;
+    notifyListeners();
+    onSuccess();
+  }
 }
