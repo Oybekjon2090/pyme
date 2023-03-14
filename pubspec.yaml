@@ -42,7 +42,10 @@ dependencies:
   flutter_screenutil: ^5.6.1
   lottie: ^2.2.0
   flutter_credit_card: ^3.0.6
-  
+  blurrycontainer: ^1.0.2
+  animated_bottom_navigation_bar: ^1.1.0+1
+  google_fonts: ^4.0.3
+  flutter_snake_navigationbar: ^0.6.1
 dev_dependencies:
   flutter_test:
     sdk: flutter

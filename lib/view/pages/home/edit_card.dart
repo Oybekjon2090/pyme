@@ -9,18 +9,20 @@ import 'package:flutter_credit_card/custom_card_type_icon.dart';
 import 'package:flutter_credit_card/glassmorphism_config.dart';
 import 'package:provider/provider.dart';
 import 'package:pyme/domen/model/ccard_model.dart';
+import 'package:pyme/view/pages/home/info_page.dart';
 import 'package:pyme/view/pages/home_page.dart';
 
-import '../../controller/cards_controller.dart';
+import '../../../controller/cards_controller.dart';
 
-class CardWidget extends StatefulWidget {
-  const CardWidget({super.key});
+class EditeCard extends StatefulWidget {
+  final CardModel info;
+  const EditeCard({super.key, required this.info});
 
   @override
-  State<CardWidget> createState() => _CardWidgetState();
+  State<EditeCard> createState() => _CardWidgetState();
 }
 
-class _CardWidgetState extends State<CardWidget> {
+class _CardWidgetState extends State<EditeCard> {
   String cardNumber = '';
   String expiryDate = '';
   String cardHolderName = '';
@@ -31,6 +33,13 @@ class _CardWidgetState extends State<CardWidget> {
   OutlineInputBorder? border;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
+  idite() {
+    cardNumber = widget.info.number ?? '';
+    expiryDate = widget.info.data ?? '';
+    cardHolderName = widget.info.name ?? '';
+    cvvCode = widget.info.svv ?? '';
+  }
+
   @override
   void initState() {
     border = OutlineInputBorder(
@@ -39,6 +48,7 @@ class _CardWidgetState extends State<CardWidget> {
         width: 2.0,
       ),
     );
+    idite();
     super.initState();
   }
 
@@ -227,15 +237,17 @@ class _CardWidgetState extends State<CardWidget> {
 
   void _onValidate() {
     if (formKey.currentState!.validate()) {
-      
-      final state = context.read<CardController>().creatCard(
-          onSuccess: () {},
-          infos: CardModel(
-              name: cardHolderName,
-              number: cardNumber,
-              data: expiryDate,
-              svv: cvvCode, docId: ''));
-      Navigator.of(context).push(MaterialPageRoute(builder: (_) => const HomePage()));
+      final state = context.read<CardController>().editUser(
+            onSuccess: () {},
+            infos: CardModel(
+                name: cardHolderName,
+                number: cardNumber,
+                data: expiryDate,
+                svv: cvvCode,
+                docId: widget.info.docId),
+          );
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (_) => const HomePage()));
     } else {
       print('invalid!');
     }

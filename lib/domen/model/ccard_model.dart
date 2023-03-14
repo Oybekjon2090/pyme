@@ -3,20 +3,23 @@ class CardModel {
   final String? number;
   final String? data;
   final String? svv;
+  final String? docId;
 
-  CardModel({
+  CardModel( {
+    required this.docId,
     required this.name,
     required this.number,
     required this.data,
     required this.svv,
   });
 
-  factory CardModel.fromJson(Map<String, dynamic>? data) {
+  factory CardModel.fromJson(Map<String, dynamic> data, String docId) {
     return CardModel(
-      name: data?["name"],
-      number: data?["username"],
-      data: data?["password"],
-      svv: data?["avatar"],
+      docId: docId,
+      name: data["name"],
+      number: data["number"],
+      data: data["data"],
+      svv: data["svv"],
     );
   }
 
@@ -26,7 +29,6 @@ class CardModel {
       "number": number,
       "data": data,
       "svv": svv,
-     
     };
   }
 }
