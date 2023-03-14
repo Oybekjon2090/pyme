@@ -5,6 +5,7 @@ import 'package:flutter_credit_card/credit_card_brand.dart';
 import 'package:flutter_credit_card/credit_card_widget.dart';
 import 'package:flutter_credit_card/custom_card_type_icon.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:pyme/controller/cards_controller.dart';
 import 'package:pyme/domen/model/ccard_model.dart';
@@ -13,6 +14,8 @@ import 'package:pyme/view/pages/general/general_page.dart';
 import 'package:pyme/view/pages/home/add_card.dart';
 import 'package:pyme/view/pages/home/edit_card.dart';
 import 'package:pyme/view/pages/home/info_page.dart';
+
+import '../style/style.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -39,7 +42,9 @@ class _HomePageState extends State<HomePage> {
         title: const Text("Card"),
       ),
       body: event.createCardLoading
-          ? const Center(child: CircularProgressIndicator())
+          ? Center(
+              child: LoadingAnimationWidget.hexagonDots(
+                  color: Style.primaryColor, size: 45))
           : Column(
               children: [
                 Expanded(
@@ -71,7 +76,10 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 FloatingActionButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (_) => AddCard()));
+                  },
                   child: Text('Add'),
                 ),
                 20.verticalSpace

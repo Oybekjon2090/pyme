@@ -46,6 +46,8 @@ dependencies:
   animated_bottom_navigation_bar: ^1.1.0+1
   google_fonts: ^4.0.3
   flutter_snake_navigationbar: ^0.6.1
+  loading_animation_widget: ^1.2.0+4
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -7,11 +7,13 @@ import 'package:flutter_credit_card/credit_card_model.dart';
 import 'package:flutter_credit_card/credit_card_widget.dart';
 import 'package:flutter_credit_card/custom_card_type_icon.dart';
 import 'package:flutter_credit_card/glassmorphism_config.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:pyme/domen/model/ccard_model.dart';
 import 'package:pyme/view/pages/home_page.dart';
 
 import '../../controller/cards_controller.dart';
+import '../style/style.dart';
 
 class CardWidget extends StatefulWidget {
   const CardWidget({super.key});
@@ -44,6 +46,7 @@ class _CardWidgetState extends State<CardWidget> {
 
   @override
   Widget build(BuildContext context) {
+    var event = context.read<CardController>();
     return Scaffold(
       body: Container(
         color: Colors.black,
@@ -71,7 +74,7 @@ class _CardWidgetState extends State<CardWidget> {
                 isHolderNameVisible: true,
                 cardBgColor: Colors.amber,
                 backgroundImage:
-                    useBackgroundImage ? 'assets/images/card.png' : null,
+                    useBackgroundImage ? 'assets/images/images.png' : null,
                 isSwipeGestureEnabled: true,
                 onCreditCardWidgetChange: (CreditCardBrand creditCardBrand) {},
                 customCardTypeIcons: <CustomCardTypeIcon>[
@@ -124,7 +127,7 @@ class _CardWidgetState extends State<CardWidget> {
                           focusedBorder: border,
                           enabledBorder: border,
                           labelText: 'CVV',
-                          hintText: 'XXX',
+                          hintText: 'XXXX',
                         ),
                         cardHolderDecoration: InputDecoration(
                           hintStyle: const TextStyle(color: Colors.white),
@@ -193,26 +196,31 @@ class _CardWidgetState extends State<CardWidget> {
                       ),
                       GestureDetector(
                         onTap: _onValidate,
-                        child: Container(
-                          margin: const EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 8),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          padding: const EdgeInsets.symmetric(vertical: 15),
-                          width: double.infinity,
-                          alignment: Alignment.center,
-                          child: const Text(
-                            'Validate',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontFamily: 'halter',
-                              fontSize: 14,
-                              package: 'flutter_credit_card',
-                            ),
-                          ),
-                        ),
+                        child: event.createLoading
+                            ? Center(
+                                child: LoadingAnimationWidget.hexagonDots(
+                                    color: Style.primaryColor, size: 45))
+                            : Container(
+                                margin: const EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 8),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 15),
+                                width: double.infinity,
+                                alignment: Alignment.center,
+                                child: const Text(
+                                  'Validate',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontFamily: 'halter',
+                                    fontSize: 14,
+                                    package: 'flutter_credit_card',
+                                  ),
+                                ),
+                              ),
                       ),
                     ],
                   ),
@@ -227,15 +235,16 @@ class _CardWidgetState extends State<CardWidget> {
 
   void _onValidate() {
     if (formKey.currentState!.validate()) {
-      
       final state = context.read<CardController>().creatCard(
           onSuccess: () {},
           infos: CardModel(
               name: cardHolderName,
               number: cardNumber,
               data: expiryDate,
-              svv: cvvCode, docId: ''));
-      Navigator.of(context).push(MaterialPageRoute(builder: (_) => const HomePage()));
+              svv: cvvCode,
+              docId: ''));
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (_) => const HomePage()));
     } else {
       print('invalid!');
     }
