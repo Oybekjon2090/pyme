@@ -210,9 +210,7 @@ class _AddSummaPageState extends State<AddSummaPage> {
                                       const Center(
                                         child: Text(
                                           "Mablag' Yetarli emas",
-                                          style: TextStyle(color: Style.primaryColor),
-
-),
+                                          style: TextStyle(color: Style.primaryColor),),
                                       ),
                                     ],
                                   );

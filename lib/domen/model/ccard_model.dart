@@ -26,10 +26,7 @@ class CardModel {
     for (var e in arxiv?.docs ?? []) {
       list.add(SummaModel.fromJson(e.data(), e.id));
     }
-    print('1 chisi ${data}');
     
-    print('3 chisi ${list}');
-    print('4 chisi ${docId}');
 
     return CardModel(
       docId: docId,

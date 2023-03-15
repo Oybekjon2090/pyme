@@ -1,12 +1,11 @@
 // ignore_for_file: non_constant_identifier_names, unused_local_variable, sort_child_properties_last
 
-import 'package:blurrycontainer/blurrycontainer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/credit_card_widget.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:pyme/domen/model/ccard_model.dart';
-import 'package:pyme/domen/model/summa_model.dart';
+
 import 'package:pyme/view/pages/home_page.dart';
 import 'package:pyme/view/style/style.dart';
 
@@ -19,7 +18,7 @@ class Infos extends StatefulWidget {
   final CardModel infos;
 
   final String docId;
-  Infos({super.key, required this.infos, required this.docId});
+  const Infos({super.key, required this.infos, required this.docId});
 
   @override
   State<Infos> createState() => _InfosState();
@@ -162,34 +161,38 @@ class _InfosState extends State<Infos> {
                     itemCount:
                         context.read<CardController>().listOfArxiv.length,
                     itemBuilder: (context, index) {
-                      return Container(
-                        padding: EdgeInsets.all(24),
-                        margin: EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                            color: Style.greyColor90,
-                            borderRadius: BorderRadius.circular(16)),
-                        child: Center(
-                          child: Column(
-                            children: [
-                              Text(
-                                'kiritilgan summa: ${context.read<CardController>().listOfArxiv[index].summa ?? 0}',
-                                style: Style.textStyleRegular(),
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
-                              ),
-                              Text(
-                                'Data: ${context.read<CardController>().listOfArxiv[index].date ?? ''}',
-                                style: Style.textStyleRegular(),
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
-                              ),
-                              Text(
-                                'Koment: ${context.read<CardController>().listOfArxiv[index].summaKomment ?? ''}',
-                                style: Style.textStyleRegular(),
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
-                              )
-                            ],
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          margin: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                              color: Style.greyColor90,
+                              borderRadius: BorderRadius.circular(16)),
+                          child: Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'kiritilgan summa: ${context.read<CardController>().listOfArxiv[index].summa ?? 0}',
+                                  style: Style.textStyleRegular(),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                ),
+                                Text(
+                                  'Data: ${context.read<CardController>().listOfArxiv[index].date ?? ''}',
+                                  style: Style.textStyleRegular(),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                ),
+                                Text(
+                                  'Koment: ${context.read<CardController>().listOfArxiv[index].summaKomment ?? ''}',
+                                  style: Style.textStyleRegular(),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                )
+                              ],
+                            ),
                           ),
                         ),
                       );
