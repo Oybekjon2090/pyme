@@ -1,27 +1,40 @@
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names, unused_local_variable, sort_child_properties_last
 
+import 'package:blurrycontainer/blurrycontainer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/credit_card_widget.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:pyme/domen/model/ccard_model.dart';
+import 'package:pyme/domen/model/summa_model.dart';
 import 'package:pyme/view/pages/home_page.dart';
 import 'package:pyme/view/style/style.dart';
 
 import '../../../controller/cards_controller.dart';
-import '../general/general_page.dart';
+
 import 'summa_add.dart';
 import 'edit_card.dart';
 
 class Infos extends StatefulWidget {
   final CardModel infos;
+
   final String docId;
-  const Infos({super.key, required this.infos, required this.docId});
+  Infos({super.key, required this.infos, required this.docId});
 
   @override
   State<Infos> createState() => _InfosState();
 }
 
 class _InfosState extends State<Infos> {
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<CardController>().getArxiv(docId: widget.infos.docId ?? '');
+    });
+
+    super.initState();
+  }
+
   bool useBackgroundImage = false;
   bool useGlassMorphism = false;
 
@@ -87,7 +100,7 @@ class _InfosState extends State<Infos> {
                                       },
                                     );
                                   },
-                                  child: Text(
+                                  child: const Text(
                                     "Xa",
                                   ),
                                 )
@@ -140,10 +153,53 @@ class _InfosState extends State<Infos> {
               ],
             ),
           ),
+          Expanded(
+            child: event.arxivLoading
+                ? Center(
+                    child: LoadingAnimationWidget.hexagonDots(
+                        color: Style.primaryColor, size: 45))
+                : ListView.builder(
+                    itemCount:
+                        context.read<CardController>().listOfArxiv.length,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        padding: EdgeInsets.all(24),
+                        margin: EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                            color: Style.greyColor90,
+                            borderRadius: BorderRadius.circular(16)),
+                        child: Center(
+                          child: Column(
+                            children: [
+                              Text(
+                                'kiritilgan summa: ${context.read<CardController>().listOfArxiv[index].summa ?? 0}',
+                                style: Style.textStyleRegular(),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                              ),
+                              Text(
+                                'Data: ${context.read<CardController>().listOfArxiv[index].date ?? ''}',
+                                style: Style.textStyleRegular(),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                              ),
+                              Text(
+                                'Koment: ${context.read<CardController>().listOfArxiv[index].summaKomment ?? ''}',
+                                style: Style.textStyleRegular(),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                              )
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+          ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Theme.of(context).unselectedWidgetColor,
+        backgroundColor: Style.primaryColor,
         onPressed: () {
           Navigator.of(context).push(
             MaterialPageRoute(
@@ -154,10 +210,7 @@ class _InfosState extends State<Infos> {
             ),
           );
         },
-        child: Icon(
-          Icons.add,
-          color: Theme.of(context).scaffoldBackgroundColor,
-        ),
+        child: const Icon(Icons.add, color: Style.whiteColor),
       ),
     );
   }

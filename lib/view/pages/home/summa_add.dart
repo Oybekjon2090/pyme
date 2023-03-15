@@ -1,4 +1,4 @@
-// ignore_for_file: unused_local_variable, depend_on_referenced_packages
+// ignore_for_file: unused_local_variable, depend_on_referenced_packages, avoid_print
 
 import 'dart:convert';
 
@@ -54,10 +54,10 @@ class _AddSummaPageState extends State<AddSummaPage> {
                 children: [
                   Text(
                     event.data["body"] ?? "body",
-                    style: TextStyle(color: Colors.black),
+                    style: const TextStyle(color: Colors.black),
                   ),
                   Text(event.data["title"] ?? "title",
-                      style: TextStyle(color: Colors.black)),
+                      style: const TextStyle(color: Colors.black)),
                 ],
               ),
             );
@@ -160,7 +160,7 @@ class _AddSummaPageState extends State<AddSummaPage> {
                                 showDialog(
                                     context: context,
                                     builder: (_) => AlertDialog(
-                                          title: Text('Sacssesful'),
+                                          title: const Text('Sacssesful'),
                                           content: Image.asset(
                                               'assets/images/done1.png',
                                               width: 100,
@@ -226,6 +226,7 @@ class _AddSummaPageState extends State<AddSummaPage> {
                             decoration: BoxDecoration(
                                 color: Style.primaryColor,
                                 borderRadius: BorderRadius.circular(16)),
+                            // ignore: prefer_const_constructors
                             child: Center(child: const Text('Save'))))
                   ],
                 ),

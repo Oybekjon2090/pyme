@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> {
                             MaterialPageRoute(
                               builder: (a) => Infos(
                                 infos: state.list[index],
-                                docId: '',
+                                docId: '', 
                               ),
                             ),
                           );

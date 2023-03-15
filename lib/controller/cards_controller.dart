@@ -16,6 +16,8 @@ class CardController extends ChangeNotifier {
   bool summaLoading = false;
   bool deleteLoading = false;
   List<CardModel> list = [];
+  List<SummaModel> listOfArxiv = [];
+  bool arxivLoading = false;
   int currentIndex = 0;
   creatCard({
     required VoidCallback onSuccess,
@@ -36,21 +38,20 @@ class CardController extends ChangeNotifier {
     notifyListeners();
   }
 
-  getCards() async {
+ getCards() async {
     createCardLoading = true;
     notifyListeners();
-    // ignore: prefer_typing_uninitialized_variables
-    var res;
+   // ignore: prefer_typing_uninitialized_variables
+   var res;
 
     res = await firestore.collection("cards").get();
     list.clear();
     for (var element in res.docs) {
       String docId = element.id;
-      list.add(CardModel.fromJson(element.data(), docId));
+      list.add(CardModel.fromJson(element.data(), docId: docId));
       debugPrint('${list.length}');
     }
     createCardLoading = false;
-
     notifyListeners();
   }
 
@@ -111,6 +112,23 @@ class CardController extends ChangeNotifier {
     summaLoading = false;
     notifyListeners();
     onSuccess();
+  }
+
+  getArxiv({required String docId}) async {
+    arxivLoading = true;
+    notifyListeners();
+    listOfArxiv.clear();
+    var res = await firestore
+        .collection("cards")
+        .doc(docId)
+        .collection("arxiv")
+        .get();
+    for (var element in res.docs) {
+      String docId = element.id;
+      listOfArxiv.add(SummaModel.fromJson(element.data(), docId) );
+    }
+    arxivLoading = false;
+    notifyListeners();
   }
 
   deleteUser({required String docId, required VoidCallback onSuccess}) async {
