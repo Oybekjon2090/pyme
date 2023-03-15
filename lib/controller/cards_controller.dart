@@ -14,6 +14,7 @@ class CardController extends ChangeNotifier {
   bool createCardLoading = false;
   bool editLoading = false;
   bool summaLoading = false;
+  bool deleteLoading = false;
   List<CardModel> list = [];
   int currentIndex = 0;
   creatCard({
@@ -22,7 +23,7 @@ class CardController extends ChangeNotifier {
   }) async {
     createLoading = true;
     notifyListeners();
-    // ignore: 
+    // ignore:
     var res = await firestore.collection("cards").add(CardModel(
             data: infos.data,
             name: infos.name,
@@ -49,7 +50,7 @@ class CardController extends ChangeNotifier {
       debugPrint('${list.length}');
     }
     createCardLoading = false;
-   
+
     notifyListeners();
   }
 
@@ -90,12 +91,13 @@ class CardController extends ChangeNotifier {
     notifyListeners();
 
     CollectionReference users = firestore.collection('cards');
-    // ignore: 
+    // ignore:
     var res = await users.doc(infos.docId).collection('arxiv').add(
           SummaModel(
             arxivId: "",
             date: info.date,
-            summaKomment: info.summaKomment, summa: info.summa,
+            summaKomment: info.summaKomment,
+            summa: info.summa,
           ).toJson(),
         );
 
@@ -107,6 +109,16 @@ class CardController extends ChangeNotifier {
           svv: infos.svv,
         ).toJson());
     summaLoading = false;
+    notifyListeners();
+    onSuccess();
+  }
+
+  deleteUser({required String docId, required VoidCallback onSuccess}) async {
+    deleteLoading = true;
+    notifyListeners();
+    CollectionReference cards = firestore.collection('cards');
+    await cards.doc(docId).delete();
+    deleteLoading = false;
     notifyListeners();
     onSuccess();
   }

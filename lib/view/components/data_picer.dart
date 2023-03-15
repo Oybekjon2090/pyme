@@ -16,7 +16,6 @@ class _DatePickerState extends State<DatePicker> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      style: Theme.of(context).textTheme.displaySmall,
       readOnly: true,
       validator: (s) {
         if (s?.isEmpty ?? true) {
@@ -45,8 +44,9 @@ class _DatePickerState extends State<DatePicker> {
               color: Style.greyColor90,
             )),
         hintText: "date",
-        hintStyle:
-            Style.textStyleRegular2(textColor: Style.greyColor90, size: 15),
+        hintStyle: Style.textStyleRegular2(
+          textColor: Style.greyColor90,
+        ),
         errorBorder: const OutlineInputBorder(
           borderSide: BorderSide(
             color: Colors.red,

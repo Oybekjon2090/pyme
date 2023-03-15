@@ -4,7 +4,7 @@ class SummaModel {
   final num? summa;
   final String? summaKomment;
 
-  SummaModel({
+  SummaModel( {
     required this.arxivId,
     required this.date,
     required this.summa,

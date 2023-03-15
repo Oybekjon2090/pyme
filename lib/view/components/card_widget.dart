@@ -63,7 +63,7 @@ class _CardWidgetState extends State<CardWidget> {
                 expiryDate: expiryDate,
                 cardHolderName: cardHolderName,
                 cvvCode: cvvCode,
-                bankName: 'Axis Bank',
+                bankName: 'Union Bank',
                 frontCardBorder:
                     !useGlassMorphism ? Border.all(color: Colors.grey) : null,
                 backCardBorder:

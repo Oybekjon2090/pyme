@@ -1,4 +1,3 @@
-
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:flutter/material.dart';
@@ -51,7 +50,10 @@ class _HomePageState extends State<HomePage> {
                         onTap: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (a) => Infos(infos: state.list[index], docId: '',),
+                              builder: (a) => Infos(
+                                infos: state.list[index],
+                                docId: '',
+                              ),
                             ),
                           );
                         },
@@ -62,6 +64,7 @@ class _HomePageState extends State<HomePage> {
                           cvvCode: state.list[index].svv ?? '',
                           showBackView: false,
                           bankName: state.list[index].name ?? '',
+                          backgroundImage: 'assets/images/card2.png',
                           isSwipeGestureEnabled: true,
                           isChipVisible: true,
                           onCreditCardWidgetChange:
@@ -73,8 +76,8 @@ class _HomePageState extends State<HomePage> {
                 ),
                 FloatingActionButton(
                   onPressed: () {
-                    Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (_) => const AddCard()));
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (_) => const AddCard()));
                   },
                   child: const Text('Add'),
                 ),

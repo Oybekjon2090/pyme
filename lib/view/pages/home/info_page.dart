@@ -2,10 +2,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/credit_card_widget.dart';
+import 'package:provider/provider.dart';
 import 'package:pyme/domen/model/ccard_model.dart';
+import 'package:pyme/view/pages/home_page.dart';
 import 'package:pyme/view/style/style.dart';
 
-import '../general/summa_add.dart';
+import '../../../controller/cards_controller.dart';
+import '../general/general_page.dart';
+import 'summa_add.dart';
 import 'edit_card.dart';
 
 class Infos extends StatefulWidget {
@@ -23,6 +27,8 @@ class _InfosState extends State<Infos> {
 
   @override
   Widget build(BuildContext context) {
+    var event = context.watch<CardController>();
+    var state = context.read<CardController>();
     return Scaffold(
       appBar: AppBar(
         title: const Text('infos'),
@@ -34,7 +40,61 @@ class _InfosState extends State<Infos> {
                           info: widget.infos,
                         )));
               },
-              icon: const Icon(Icons.edit))
+              icon: const Icon(Icons.edit)),
+          PopupMenuButton(
+              // add icon, by default "3 dot" icon
+              // icon: Icon(Icons.book)
+              itemBuilder: (context) {
+            return [
+              const PopupMenuItem<int>(
+                value: 1,
+                child: Text("Delete"),
+              ),
+            ];
+          }, onSelected: (value) {
+            if (value == 1) {
+              showDialog(
+                  context: context,
+                  builder: (_) => AlertDialog(
+                        title: Text(
+                          "waiting_delete",
+                          style: Style.textStyleRegular(
+                              textColor: Style.blackColor),
+                        ),
+                        actions: [
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Text(
+                              "Yoq",
+                            ),
+                          ),
+                          state.deleteLoading
+                              ? const CircularProgressIndicator()
+                              : ElevatedButton(
+                                  onPressed: () {
+                                    state.deleteUser(
+                                      docId: widget.infos.docId ?? '',
+                                      onSuccess: () {
+                                        Navigator.of(context)
+                                            .pushAndRemoveUntil(
+                                                MaterialPageRoute(
+                                                  builder: (a) =>
+                                                      const HomePage(),
+                                                ),
+                                                (route) => false);
+                                      },
+                                    );
+                                  },
+                                  child: Text(
+                                    "Xa",
+                                  ),
+                                )
+                        ],
+                      ));
+            }
+          }),
         ],
       ),
       body: Column(
@@ -80,8 +140,6 @@ class _InfosState extends State<Infos> {
               ],
             ),
           ),
-           
-          
         ],
       ),
       floatingActionButton: FloatingActionButton(
